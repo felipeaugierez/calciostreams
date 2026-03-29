@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CDN Live TV — Channels & Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080810;
+  --surface: #10101e;
+  --surface2: #181828;
+  --surface3: #1e1e32;
+  --border: #282840;
+  --accent: #ff3c6e;
+  --accent2: #3caaff;
+  --live: #ff3c6e;
+  --upcoming: #3caaff;
+  --finished: #5a5a7a;
+  --online: #3cff9a;
+  --offline: #ff3c6e;
+  --text: #e8e8f4;
+  --muted: #6868a0;
+  --gold: #ffcc44;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── TOP NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(8,8,16,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px; height: 58px; gap: 8px;
+}
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 800; letter-spacing: 1px;
+  color: var(--text); margin-right: 16px;
+}
+.nav-logo span { color: var(--accent); }
+.nav-tab {
+  background: none; border: none; color: var(--muted);
+  font-family: 'Barlow', sans-serif; font-size: 14px;
+  font-weight: 600; letter-spacing: 0.5px;
+  padding: 8px 16px; border-radius: 6px;
+  cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+}
+.nav-tab:hover { color: var(--text); background: var(--surface2); }
+.nav-tab.active { color: var(--text); background: var(--surface2); border-bottom: 2px solid var(--accent); border-radius: 6px 6px 0 0; }
+.nav-search {
+  margin-left: auto; position: relative;
+}
+.nav-search input {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); padding: 8px 14px 8px 36px;
+  border-radius: 8px; font-family: 'Barlow', sans-serif;
+  font-size: 13px; outline: none; width: 220px;
+  transition: border-color 0.2s;
+}
+.nav-search input:focus { border-color: var(--accent2); }
+.nav-search input::placeholder { color: var(--muted); }
+.nav-search .si {
+  position: absolute; left: 11px; top: 50%;
+  transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events:none;
+}
+.live-badge-pulse {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,60,110,0.12); border: 1px solid rgba(255,60,110,0.4);
+  color: var(--accent); font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 4px; letter-spacing: 1px;
+  margin-left: 8px;
+}
+.live-badge-pulse::before {
+  content:''; width:7px; height:7px; border-radius:50%;
+  background: var(--accent); animation: pulse 1.2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+
+/* ── SECTIONS ── */
+.section { display: none; padding: 24px; }
+.section.active { display: block; }
+
+/* ── CHANNELS SECTION ── */
+.toolbar {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  align-items: center; margin-bottom: 20px;
+}
+.filter-pill {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--muted); padding: 6px 14px; border-radius: 20px;
+  cursor: pointer; font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s;
+}
+.filter-pill:hover { border-color: var(--accent2); color: var(--text); }
+.filter-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.filter-pill.on-active { background: var(--online); border-color: var(--online); color: #000; }
+.filter-pill.off-active { background: rgba(255,60,110,0.2); border-color: var(--accent); color: var(--accent); }
+
+.stats-row {
+  display: flex; gap: 16px; margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+.stat-chip {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 18px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.stat-chip .n { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:800; line-height:1; }
+.stat-chip .l { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.stat-chip.green .n { color: var(--online); }
+.stat-chip.red .n { color: var(--offline); }
+
+.country-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px;
+}
+.ctab {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--muted); padding: 5px 12px; border-radius: 16px;
+  cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.15s;
+}
+.ctab:hover { border-color: var(--accent2); color: var(--text); }
+.ctab.active { background: var(--accent2); border-color: var(--accent2); color: #000; font-weight: 700; }
+
+.country-section { margin-bottom: 32px; }
+.country-section-header {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 700; letter-spacing: 1px;
+  padding-bottom: 10px; margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.country-section-header .cnt {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  background: var(--surface2); padding: 2px 8px; border-radius: 10px;
+}
+
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+.ch-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px; cursor: pointer;
+  text-decoration: none; color: var(--text);
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; transition: all 0.18s; position: relative;
+  overflow: hidden;
+}
+.ch-card:hover { border-color: var(--accent2); transform: translateY(-2px); background: var(--surface2); }
+.ch-card.offline-ch { opacity: 0.45; }
+.ch-card.offline-ch:hover { border-color: var(--offline); opacity: 0.7; }
+.ch-logo {
+  width: 56px; height: 40px; object-fit: contain;
+  filter: brightness(0.9);
+}
+.ch-logo-fallback {
+  width: 56px; height: 40px; background: var(--surface3);
+  border-radius: 6px; display:flex; align-items:center; justify-content:center;
+  font-size: 10px; color: var(--muted); text-align: center; padding: 4px;
+  line-height: 1.2;
+}
+.ch-name { font-size: 12px; font-weight: 500; text-align: center; line-height: 1.3; }
+.ch-status {
+  width: 7px; height: 7px; border-radius: 50%;
+  position: absolute; top: 8px; right: 8px;
+}
+.ch-status.online { background: var(--online); box-shadow: 0 0 5px var(--online); }
+.ch-status.offline { background: var(--offline); }
+
+/* ── EVENTS SECTION ── */
+.sports-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px;
+}
+.stab {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--muted); padding: 6px 14px; border-radius: 8px;
+  cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.18s;
+  display: flex; align-items: center; gap: 6px;
+}
+.stab:hover { border-color: var(--gold); color: var(--text); }
+.stab.active { background: var(--gold); border-color: var(--gold); color: #000; }
+.stab .count {
+  background: rgba(0,0,0,0.2); border-radius: 10px;
+  padding: 1px 6px; font-size: 11px;
+}
+.stab.active .count { background: rgba(0,0,0,0.2); }
+
+.status-filters { display: flex; gap: 8px; margin-bottom: 20px; }
+.sf-btn {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--muted); padding: 6px 14px; border-radius: 6px;
+  cursor: pointer; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.18s;
+}
+.sf-btn:hover { color: var(--text); }
+.sf-btn.active-live { border-color: var(--live); color: var(--live); background: rgba(255,60,110,0.08); }
+.sf-btn.active-upcoming { border-color: var(--upcoming); color: var(--upcoming); background: rgba(60,170,255,0.08); }
+.sf-btn.active-finished { border-color: var(--finished); color: var(--finished); background: rgba(90,90,120,0.08); }
+.sf-btn.active-all { border-color: var(--gold); color: var(--gold); background: rgba(255,204,68,0.08); }
+
+.events-list { display: flex; flex-direction: column; gap: 10px; }
+
+.event-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px;
+  display: flex; align-items: center; gap: 16px;
+  transition: border-color 0.2s; position: relative;
+  overflow: hidden;
+}
+.event-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.event-card.status-live::before { background: var(--live); }
+.event-card.status-upcoming::before { background: var(--upcoming); }
+.event-card.status-finished::before { background: var(--finished); opacity: 0.5; }
+.event-card:hover { border-color: var(--border); background: var(--surface2); }
+
+.event-card.status-finished { opacity: 0.6; }
+
+.ev-teams {
+  display: flex; align-items: center; gap: 10px;
+  min-width: 0; flex: 1;
+}
+.team-block {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 5px; min-width: 52px;
+}
+.team-img {
+  width: 38px; height: 38px; object-fit: contain; border-radius: 4px;
+}
+.team-img-fallback {
+  width: 38px; height: 38px; background: var(--surface3);
+  border-radius: 6px; display:flex; align-items:center; justify-content:center;
+  font-size: 9px; color: var(--muted); text-align: center; padding: 4px;
+}
+.team-name {
+  font-size: 12px; font-weight: 600; text-align: center;
+  max-width: 70px; line-height: 1.2;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.vs-block { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.vs { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); }
+.ev-time { font-size: 13px; font-weight: 700; color: var(--text); }
+
+/* event (non-match) */
+.ev-event-block { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.ev-event-img { width: 44px; height: 44px; object-fit: contain; border-radius: 6px; }
+.ev-event-info { min-width: 0; }
+.ev-event-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.ev-tournament { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.ev-meta {
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 6px; min-width: 100px;
+}
+.ev-status {
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 4px;
+}
+.ev-status.live { background: rgba(255,60,110,0.15); color: var(--live); border: 1px solid rgba(255,60,110,0.3); }
+.ev-status.live::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--live); animation:pulse 1.2s infinite; }
+.ev-status.upcoming { background: rgba(60,170,255,0.1); color: var(--upcoming); border: 1px solid rgba(60,170,255,0.25); }
+.ev-status.finished { background: rgba(90,90,120,0.15); color: var(--muted); border: 1px solid rgba(90,90,120,0.25); }
+.ev-country {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--muted);
+}
+.ev-country img { width: 16px; height: 11px; border-radius: 1px; object-fit: cover; }
+
+.ev-channels {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end;
+}
+.ev-ch-link {
+  text-decoration: none;
+  transition: transform 0.15s;
+  display: flex;
+}
+.ev-ch-link:hover { transform: scale(1.12); }
+.ev-ch-img {
+  width: 28px; height: 20px; object-fit: contain;
+  border-radius: 3px; background: var(--surface3);
+}
+.ev-ch-fallback {
+  width: 28px; height: 20px; background: var(--surface3);
+  border-radius: 3px; display: flex; align-items: center;
+  justify-content: center; font-size: 8px; color: var(--muted);
+}
+.no-channels { font-size: 11px; color: var(--muted); font-style: italic; }
+
+.no-results { text-align: center; color: var(--muted); padding: 60px; }
+.no-results span { display: block; font-size: 48px; margin-bottom: 12px; }
+
+.spinner-wrap {
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px;
+}
+.spinner {
+  width: 40px; height: 40px; border: 3px solid var(--border);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* section headers */
+.section-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 800; letter-spacing: 1px;
+  margin-bottom: 4px; display: flex; align-items: center; gap: 10px;
+}
+.section-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+@media(max-width:768px) {
+  nav { padding: 0 12px; gap: 4px; }
+  .nav-search input { width: 140px; }
+  .section { padding: 14px; }
+  .channels-grid { grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 8px; }
+  .event-card { flex-wrap: wrap; padding: 12px; }
+  .ev-meta { flex-direction: row; align-items: center; min-width: auto; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">CDN<span>●</span>LIVE</div>
+  <button class="nav-tab active" id="tabChannels" onclick="switchTab('channels')">📺 Channels</button>
+  <button class="nav-tab" id="tabEvents" onclick="switchTab('events')">⚡ Sports Events</button>
+  <span class="live-badge-pulse" id="liveCount" style="display:none">LIVE</span>
+  <div class="nav-search">
+    <span class="si">🔍</span>
+    <input type="text" id="searchBox" placeholder="Search…" oninput="onSearch()">
+  </div>
+</nav>
+
+<!-- CHANNELS SECTION -->
+<div class="section active" id="sectionChannels">
+  <div class="section-heading">📺 Live Channels</div>
+  <div class="section-sub" id="channelSub">Loading channels from API…</div>
+  <div id="channelLoadingSpinner" class="spinner-wrap"><div class="spinner"></div></div>
+  <div id="channelContent" style="display:none">
+    <div class="stats-row">
+      <div class="stat-chip"><div class="n" id="statTotal">—</div><div class="l">Total</div></div>
+      <div class="stat-chip green"><div class="n" id="statOnline">—</div><div class="l">Online</div></div>
+      <div class="stat-chip red"><div class="n" id="statOffline">—</div><div class="l">Offline</div></div>
+    </div>
+    <div class="toolbar">
+      <button class="filter-pill active" id="cfAll" onclick="setCF('all')">All</button>
+      <button class="filter-pill" id="cfOn" onclick="setCF('online')">🟢 Online Only</button>
+      <button class="filter-pill" id="cfOff" onclick="setCF('offline')">🔴 Offline Only</button>
+    </div>
+    <div class="country-tabs" id="countryTabsEl"></div>
+    <div id="channelGrid"></div>
+  </div>
+</div>
+
+<!-- EVENTS SECTION -->
+<div class="section" id="sectionEvents">
+  <div class="section-heading">⚡ Sports Events <span id="liveCountBadge" class="live-badge-pulse" style="display:none">LIVE</span></div>
+  <div class="section-sub" id="eventSub">Loading events from API…</div>
+  <div id="eventsLoadingSpinner" class="spinner-wrap"><div class="spinner"></div></div>
+  <div id="eventContent" style="display:none">
+    <div class="sports-tabs" id="sportsTabsEl"></div>
+    <div class="status-filters">
+      <button class="sf-btn active-all" id="sfAll" onclick="setEF('all')">All</button>
+      <button class="sf-btn" id="sfLive" onclick="setEF('live')">🔴 Live</button>
+      <button class="sf-btn" id="sfUpcoming" onclick="setEF('upcoming')">🔵 Upcoming</button>
+      <button class="sf-btn" id="sfFinished" onclick="setEF('finished')">⚫ Finished</button>
+    </div>
+    <div class="events-list" id="eventsList"></div>
+  </div>
+</div>
+
+<script>
+const CHANNELS_API = 'https://api.cdn-live.tv/api/v1/channels/?user=cdnlivetv&plan=free';
+const EVENTS_API   = 'https://api.cdn-live.tv/api/v1/events/sports/?user=cdnlivetv&plan=free';
+
+const COUNTRY_NAMES = {
+  us:'🇺🇸 USA', gb:'🇬🇧 UK', au:'🇦🇺 Australia', nz:'🇳🇿 New Zealand',
+  ca:'🇨🇦 Canada', za:'🇿🇦 South Africa', fr:'🇫🇷 France', es:'🇪🇸 Spain',
+  de:'🇩🇪 Germany', it:'🇮🇹 Italy', pt:'🇵🇹 Portugal', nl:'🇳🇱 Netherlands',
+  gr:'🇬🇷 Greece', dk:'🇩🇰 Denmark', at:'🇦🇹 Austria', pl:'🇵🇱 Poland',
+  ru:'🇷🇺 Russia', bg:'🇧🇬 Bulgaria', cy:'🇨🇾 Cyprus', rs:'🇷🇸 Serbia',
+  hr:'🇭🇷 Croatia', be:'🇧🇪 Belgium', cz:'🇨🇿 Czech', hu:'🇭🇺 Hungary',
+  se:'🇸🇪 Sweden', br:'🇧🇷 Brazil', ar:'🇦🇷 Argentina', mx:'🇲🇽 Mexico',
+  uy:'🇺🇾 Uruguay', cl:'🇨🇱 Chile', co:'🇨🇴 Colombia', ro:'🇷🇴 Romania',
+  tr:'🇹🇷 Turkey', il:'🇮🇱 Israel', eg:'🇪🇬 Egypt', ae:'🇦🇪 UAE',
+  sa:'🇸🇦 Saudi Arabia', in:'🇮🇳 India'
+};
+
+const SPORT_ICONS = {
+  Soccer:'⚽', NBA:'🏀', NHL:'🏒', Cricket:'🏏', Golf:'⛳', Tennis:'🎾',
+  Volleyball:'🏐', Cycling:'🚴', 'Winter Sports':'⛷️', 'Horse Racing':'🏇',
+  Basketball:'🏀', NFL:'🏈', NCAA:'🏈', NCAAW:'🏈'
+};
+
+let allChannels = [], eventsData = {};
+let activeCountry = 'all', cfMode = 'all', activeSport = null, efMode = 'all';
+let searchVal = '';
+
+// ── TAB SWITCH ──
+function switchTab(t) {
+  ['channels','events'].forEach(id => {
+    document.getElementById('section'+id.charAt(0).toUpperCase()+id.slice(1)).classList.toggle('active', id===t);
+    document.getElementById('tab'+id.charAt(0).toUpperCase()+id.slice(1)).classList.toggle('active', id===t);
+  });
+  document.getElementById('searchBox').placeholder = t==='channels' ? 'Search channels…' : 'Search events…';
+  onSearch();
+}
+
+// ── SEARCH ──
+function onSearch() {
+  searchVal = document.getElementById('searchBox').value.toLowerCase().trim();
+  const sec = document.getElementById('sectionChannels').classList.contains('active');
+  if (sec) renderChannels();
+  else renderEvents();
+}
+
+// ── CHANNELS ──
+async function loadChannels() {
+  try {
+    const r = await fetch(CHANNELS_API);
+    const d = await r.json();
+    allChannels = d.channels || [];
+    document.getElementById('channelLoadingSpinner').style.display = 'none';
+    document.getElementById('channelContent').style.display = 'block';
+    document.getElementById('channelSub').textContent = `${allChannels.length} channels across ${new Set(allChannels.map(c=>c.code)).size} countries — live data`;
+    buildCountryTabs();
+    renderChannels();
+  } catch(e) {
+    document.getElementById('channelLoadingSpinner').innerHTML = '<p style="color:var(--muted)">Failed to load channels. CORS may block direct fetch.</p>';
+    console.error(e);
+  }
+}
+
+function buildCountryTabs() {
+  const codes = [...new Set(allChannels.map(c => c.code))];
+  const el = document.getElementById('countryTabsEl');
+  el.innerHTML = '';
+  const all = mkEl('button','ctab active','🌍 All'); all.id='ctab-all'; all.onclick=()=>setCountry('all'); el.appendChild(all);
+  codes.forEach(code => {
+    const b = mkEl('button','ctab', COUNTRY_NAMES[code]||code.toUpperCase());
+    b.id = 'ctab-'+code; b.onclick = () => setCountry(code); el.appendChild(b);
+  });
+}
+
+function setCountry(c) {
+  activeCountry = c;
+  document.querySelectorAll('.ctab').forEach(b => b.classList.remove('active'));
+  document.getElementById('ctab-'+c)?.classList.add('active');
+  renderChannels();
+}
+
+function setCF(m) {
+  cfMode = m;
+  ['all','on','off'].forEach(k => {
+    const b = document.getElementById('cf'+k.charAt(0).toUpperCase()+k.slice(1));
+    b.className = 'filter-pill' + (k==='all'&&m==='all' ? ' active' : k==='on'&&m==='online' ? ' on-active' : k==='off'&&m==='offline' ? ' off-active' : '');
+  });
+  renderChannels();
+}
+
+function renderChannels() {
+  const filtered = allChannels.filter(ch => {
+    if (activeCountry !== 'all' && ch.code !== activeCountry) return false;
+    if (cfMode !== 'all' && ch.status !== cfMode) return false;
+    if (searchVal && !ch.name.toLowerCase().includes(searchVal)) return false;
+    return true;
+  });
+
+  const online = filtered.filter(c=>c.status==='online').length;
+  const offline = filtered.filter(c=>c.status==='offline').length;
+  document.getElementById('statTotal').textContent = filtered.length;
+  document.getElementById('statOnline').textContent = online;
+  document.getElementById('statOffline').textContent = offline;
+
+  const grid = document.getElementById('channelGrid');
+  grid.innerHTML = '';
+
+  if (!filtered.length) { grid.innerHTML = '<div class="no-results"><span>📡</span>No channels found.</div>'; return; }
+
+  if (activeCountry !== 'all' || searchVal) {
+    const g = mkEl('div','channels-grid');
+    filtered.forEach(ch => g.appendChild(makeChannelCard(ch)));
+    grid.appendChild(g);
+  } else {
+    const byCountry = {};
+    filtered.forEach(ch => { if(!byCountry[ch.code]) byCountry[ch.code]=[]; byCountry[ch.code].push(ch); });
+    for (const [code, chs] of Object.entries(byCountry)) {
+      const sec = mkEl('div','country-section');
+      const hdr = mkEl('div','country-section-header');
+      hdr.innerHTML = `${COUNTRY_NAMES[code]||code.toUpperCase()} <span class="cnt">${chs.length}</span>`;
+      const g = mkEl('div','channels-grid');
+      chs.forEach(ch => g.appendChild(makeChannelCard(ch)));
+      sec.appendChild(hdr); sec.appendChild(g);
+      grid.appendChild(sec);
+    }
+  }
+}
+
+function makeChannelCard(ch) {
+  const a = document.createElement('a');
+  a.href = ch.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+  a.className = 'ch-card' + (ch.status==='offline' ? ' offline-ch' : '');
+
+  const dot = mkEl('span','ch-status '+ch.status);
+  const imgWrap = document.createElement('div');
+
+  if (ch.image) {
+    const img = document.createElement('img');
+    img.src = ch.image; img.alt = ch.name; img.className = 'ch-logo';
+    img.onerror = () => { img.replaceWith(mkLogoFallback(ch.name)); };
+    imgWrap.appendChild(img);
+  } else { imgWrap.appendChild(mkLogoFallback(ch.name)); }
+
+  const name = mkEl('span','ch-name', ch.name);
+  a.appendChild(dot); a.appendChild(imgWrap); a.appendChild(name);
+  return a;
+}
+
+function mkLogoFallback(name) {
+  const d = mkEl('div','ch-logo-fallback', name.slice(0,12));
+  return d;
+}
+
+// ── EVENTS ──
+async function loadEvents() {
+  try {
+    const r = await fetch(EVENTS_API);
+    const d = await r.json();
+    eventsData = d['cdn-live-tv'] || {};
+    document.getElementById('eventsLoadingSpinner').style.display = 'none';
+    document.getElementById('eventContent').style.display = 'block';
+
+    const totalLive = Object.values(eventsData).flat().filter(e=>e.status==='live').length;
+    const sub = Object.keys(eventsData).filter(k=>eventsData[k].length>0).length + ' sports — ' + Object.values(eventsData).flat().length + ' events today';
+    document.getElementById('eventSub').textContent = sub;
+
+    if (totalLive > 0) {
+      const lb = document.getElementById('liveCount');
+      lb.style.display = 'inline-flex';
+      lb.textContent = ' ' + totalLive + ' LIVE';
+      const lb2 = document.getElementById('liveCountBadge');
+      lb2.style.display = 'inline-flex';
+      lb2.textContent = totalLive + ' LIVE';
+    }
+
+    buildSportsTabs();
+    const firstSport = Object.keys(eventsData).find(k => eventsData[k].length > 0);
+    if (firstSport) { activeSport = firstSport; document.getElementById('stab-'+firstSport)?.classList.add('active'); }
+    renderEvents();
+  } catch(e) {
+    document.getElementById('eventsLoadingSpinner').innerHTML = '<p style="color:var(--muted)">Failed to load events.</p>';
+    console.error(e);
+  }
+}
+
+function buildSportsTabs() {
+  const el = document.getElementById('sportsTabsEl');
+  el.innerHTML = '';
+  for (const [sport, evs] of Object.entries(eventsData)) {
+    if (!evs.length) continue;
+    const liveN = evs.filter(e=>e.status==='live').length;
+    const b = document.createElement('button');
+    b.className = 'stab'; b.id = 'stab-'+sport;
+    b.innerHTML = `${SPORT_ICONS[sport]||'🏆'} ${sport} <span class="count">${evs.length}${liveN?' <span style="color:var(--live)">●'+liveN+'</span>':''}</span>`;
+    b.onclick = () => setSport(sport);
+    el.appendChild(b);
+  }
+}
+
+function setSport(s) {
+  activeSport = s;
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  document.getElementById('stab-'+s)?.classList.add('active');
+  renderEvents();
+}
+
+function setEF(m) {
+  efMode = m;
+  ['all','live','upcoming','finished'].forEach(k => {
+    const b = document.getElementById('sf'+k.charAt(0).toUpperCase()+k.slice(1));
+    b.className = 'sf-btn' + (m===k ? ' active-'+k : '');
+  });
+  renderEvents();
+}
+
+function renderEvents() {
+  const list = document.getElementById('eventsList');
+  list.innerHTML = '';
+  if (!activeSport || !eventsData[activeSport]) return;
+
+  let evs = eventsData[activeSport].filter(e => {
+    if (efMode !== 'all' && e.status !== efMode) return false;
+    if (searchVal) {
+      const searchIn = [e.homeTeam, e.awayTeam, e.event, e.tournament, e.country].filter(Boolean).join(' ').toLowerCase();
+      if (!searchIn.includes(searchVal)) return false;
+    }
+    return true;
+  });
+
+  // Sort: live first, then upcoming, then finished
+  const order = {live:0, upcoming:1, finished:2};
+  evs.sort((a,b) => (order[a.status]??3) - (order[b.status]??3));
+
+  if (!evs.length) { list.innerHTML = '<div class="no-results"><span>🏟️</span>No events found.</div>'; return; }
+
+  evs.forEach(ev => list.appendChild(makeEventCard(ev)));
+}
+
+function makeEventCard(ev) {
+  const card = mkEl('div', `event-card status-${ev.status}`);
+
+  // Is it a team match or a generic event?
+  const isMatch = ev.homeTeam && ev.awayTeam;
+
+  if (isMatch) {
+    // Teams layout
+    const teams = mkEl('div','ev-teams');
+    teams.appendChild(makeTeamBlock(ev.homeTeam, ev.homeTeamIMG));
+    const mid = mkEl('div','vs-block');
+    mid.appendChild(mkEl('span','vs','VS'));
+    mid.appendChild(mkEl('div','ev-time',ev.time));
+    teams.appendChild(mid);
+    teams.appendChild(makeTeamBlock(ev.awayTeam, ev.awayTeamIMG));
+    card.appendChild(teams);
+    // Tournament pill
+    const tour = mkEl('div','','');
+    tour.innerHTML = `<div style="font-size:12px;color:var(--muted)">${escHtml(ev.tournament||'')} <span style="margin:0 4px">·</span> <img src="${escHtml(ev.countryIMG||'')}" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;"> ${escHtml(ev.country||'')}</div>`;
+    card.appendChild(tour);
+  } else {
+    // Event layout
+    const eb = mkEl('div','ev-event-block');
+    if (ev.eventIMG) {
+      const img = document.createElement('img');
+      img.src = ev.eventIMG; img.alt = ''; img.className = 'ev-event-img';
+      img.onerror = () => img.style.display='none';
+      eb.appendChild(img);
+    }
+    const info = mkEl('div','ev-event-info');
+    info.appendChild(mkEl('div','ev-event-name', escHtml(ev.event||'Unknown Event')));
+    info.appendChild(mkEl('div','ev-tournament', `${ev.tournament||''} · ${ev.time}`));
+    eb.appendChild(info);
+    card.appendChild(eb);
+  }
+
+  // Right meta
+  const meta = mkEl('div','ev-meta');
+  const statusEl = mkEl('span','ev-status '+ev.status, ev.status.toUpperCase());
+  meta.appendChild(statusEl);
+
+  // Channels
+  if (ev.channels && ev.channels.length) {
+    const chRow = mkEl('div','ev-channels');
+    ev.channels.forEach(ch => {
+      const a = document.createElement('a');
+      a.href = ch.url; a.target='_blank'; a.rel='noopener noreferrer';
+      a.className = 'ev-ch-link'; a.title = ch.channel_name;
+      if (ch.image) {
+        const img = document.createElement('img');
+        img.src = ch.image; img.alt = ch.channel_name; img.className = 'ev-ch-img';
+        img.onerror = () => img.replaceWith(mkEl('div','ev-ch-fallback','TV'));
+        a.appendChild(img);
+      } else {
+        a.appendChild(mkEl('div','ev-ch-fallback','TV'));
+      }
+      chRow.appendChild(a);
+    });
+    meta.appendChild(chRow);
+  } else {
+    meta.appendChild(mkEl('span','no-channels','No stream'));
+  }
+
+  card.appendChild(meta);
+  return card;
+}
+
+function makeTeamBlock(name, imgUrl) {
+  const b = mkEl('div','team-block');
+  if (imgUrl && !imgUrl.endsWith('logo.png')) {
+    const img = document.createElement('img');
+    img.src = imgUrl; img.alt = name; img.className = 'team-img';
+    img.onerror = () => img.replaceWith(mkEl('div','team-img-fallback',name.slice(0,3)));
+    b.appendChild(img);
+  } else {
+    b.appendChild(mkEl('div','team-img-fallback',name.slice(0,3)));
+  }
+  const nm = mkEl('span','team-name', name);
+  b.appendChild(nm);
+  return b;
+}
+
+// ── HELPERS ──
+function mkEl(tag, cls='', text='') {
+  const el = document.createElement(tag);
+  if (cls) el.className = cls;
+  if (text) el.textContent = text;
+  return el;
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── INIT ──
+loadChannels();
+loadEvents();
+</script>
+</body>
+</html>
