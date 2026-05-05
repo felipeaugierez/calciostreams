@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calcio Streams</title>
-<link rel="icon" type="image/x-icon" href="/calciostreams/favicon.ico?v=3">
-<link rel="shortcut icon" type="image/x-icon" href="/calciostreams/favicon.ico?v=3">
+<link rel="icon" type="image/x-icon" href="/livechannels/favicon.ico?v=3">
+<link rel="shortcut icon" type="image/x-icon" href="/livechannels/favicon.ico?v=3">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -58,15 +58,12 @@ nav {
 }
 .nav-tab:hover { color: var(--text); background: var(--surface2); }
 .nav-tab.active { color: var(--text); background: var(--surface2); border-bottom: 2px solid var(--accent); border-radius: 6px 6px 0 0; }
-.nav-search {
-  margin-left: auto; position: relative;
-}
+.nav-search { margin-left: auto; position: relative; }
 .nav-search input {
   background: var(--surface2); border: 1px solid var(--border);
   color: var(--text); padding: 8px 14px 8px 36px;
   border-radius: 8px; font-family: 'Barlow', sans-serif;
-  font-size: 13px; outline: none; width: 220px;
-  transition: border-color 0.2s;
+  font-size: 13px; outline: none; width: 220px; transition: border-color 0.2s;
 }
 .nav-search input:focus { border-color: var(--accent2); }
 .nav-search input::placeholder { color: var(--muted); }
@@ -78,8 +75,7 @@ nav {
   display: inline-flex; align-items: center; gap: 5px;
   background: rgba(255,60,110,0.12); border: 1px solid rgba(255,60,110,0.4);
   color: var(--accent); font-size: 11px; font-weight: 700;
-  padding: 3px 8px; border-radius: 4px; letter-spacing: 1px;
-  margin-left: 8px;
+  padding: 3px 8px; border-radius: 4px; letter-spacing: 1px; margin-left: 8px;
 }
 .live-badge-pulse::before {
   content:''; width:7px; height:7px; border-radius:50%;
@@ -90,10 +86,7 @@ nav {
 .section { display: none; padding: 24px; }
 .section.active { display: block; }
 
-.toolbar {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  align-items: center; margin-bottom: 20px;
-}
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
 .filter-pill {
   background: var(--surface); border: 1px solid var(--border);
   color: var(--muted); padding: 6px 14px; border-radius: 20px;
@@ -105,22 +98,17 @@ nav {
 .filter-pill.on-active { background: var(--online); border-color: var(--online); color: #000; }
 .filter-pill.off-active { background: rgba(255,60,110,0.2); border-color: var(--accent); color: var(--accent); }
 
-.stats-row {
-  display: flex; gap: 16px; margin-bottom: 22px; flex-wrap: wrap;
-}
+.stats-row { display: flex; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
 .stat-chip {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 18px;
-  display: flex; flex-direction: column; gap: 2px;
+  border-radius: 8px; padding: 10px 18px; display: flex; flex-direction: column; gap: 2px;
 }
 .stat-chip .n { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:800; line-height:1; }
 .stat-chip .l { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 .stat-chip.green .n { color: var(--online); }
 .stat-chip.red .n { color: var(--offline); }
 
-.country-tabs {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px;
-}
+.country-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
 .ctab {
   background: var(--surface); border: 1px solid var(--border);
   color: var(--muted); padding: 5px 12px; border-radius: 16px;
@@ -134,19 +122,15 @@ nav {
   display: flex; align-items: center; gap: 10px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 20px; font-weight: 700; letter-spacing: 1px;
-  padding-bottom: 10px; margin-bottom: 14px;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px; margin-bottom: 14px; border-bottom: 1px solid var(--border);
 }
 .country-section-header .cnt {
-  font-family: 'Barlow', sans-serif;
-  font-size: 12px; font-weight: 500; color: var(--muted);
-  background: var(--surface2); padding: 2px 8px; border-radius: 10px;
+  font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 500;
+  color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 10px;
 }
 
 .channels-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px;
 }
 .ch-card {
   background: var(--surface); border: 1px solid var(--border);
@@ -160,21 +144,16 @@ nav {
 .ch-card.offline-ch:hover { border-color: var(--offline); opacity: 0.7; }
 .ch-logo { width: 56px; height: 40px; object-fit: contain; filter: brightness(0.9); }
 .ch-logo-fallback {
-  width: 56px; height: 40px; background: var(--surface3);
-  border-radius: 6px; display:flex; align-items:center; justify-content:center;
+  width: 56px; height: 40px; background: var(--surface3); border-radius: 6px;
+  display:flex; align-items:center; justify-content:center;
   font-size: 10px; color: var(--muted); text-align: center; padding: 4px; line-height: 1.2;
 }
 .ch-name { font-size: 12px; font-weight: 500; text-align: center; line-height: 1.3; }
-.ch-status {
-  width: 7px; height: 7px; border-radius: 50%;
-  position: absolute; top: 8px; right: 8px;
-}
+.ch-status { width: 7px; height: 7px; border-radius: 50%; position: absolute; top: 8px; right: 8px; }
 .ch-status.online { background: var(--online); box-shadow: 0 0 5px var(--online); }
 .ch-status.offline { background: var(--offline); }
 
-.sports-tabs {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px;
-}
+.sports-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
 .stab {
   background: var(--surface); border: 1px solid var(--border);
   color: var(--muted); padding: 6px 14px; border-radius: 8px;
@@ -184,7 +163,6 @@ nav {
 .stab:hover { border-color: var(--gold); color: var(--text); }
 .stab.active { background: var(--gold); border-color: var(--gold); color: #000; }
 .stab .count { background: rgba(0,0,0,0.2); border-radius: 10px; padding: 1px 6px; font-size: 11px; }
-.stab.active .count { background: rgba(0,0,0,0.2); }
 
 .status-filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
 .sf-btn {
@@ -199,35 +177,31 @@ nav {
 .sf-btn.active-finished { border-color: var(--finished); color: var(--finished); background: rgba(90,90,120,0.08); }
 .sf-btn.active-all { border-color: var(--gold); color: var(--gold); background: rgba(255,204,68,0.08); }
 
-.tz-bar {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 18px; flex-wrap: wrap;
-}
-.tz-bar label {
-  font-size: 12px; color: var(--muted);
-  text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
-}
+.tz-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+.tz-bar label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
 .tz-bar select {
   background: var(--surface2); border: 1px solid var(--border);
   color: var(--text); padding: 6px 10px; border-radius: 6px;
   font-family: 'Barlow', sans-serif; font-size: 13px;
   outline: none; cursor: pointer; transition: border-color 0.2s;
 }
-.tz-bar select:hover { border-color: var(--accent2); }
-.tz-bar select:focus { border-color: var(--accent2); }
+.tz-bar select:hover, .tz-bar select:focus { border-color: var(--accent2); }
 .tz-clock {
-  font-size: 12px; color: var(--muted);
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 5px 10px; border-radius: 6px; letter-spacing: 0.5px;
+  font-size: 12px; color: var(--muted); background: var(--surface);
+  border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; letter-spacing: 0.5px;
 }
 
-.events-list { display: flex; flex-direction: column; gap: 10px; }
+/* ── EVENT CARD ── */
+.events-list { display: flex; flex-direction: column; gap: 6px; }
+
+.event-wrap { display: flex; flex-direction: column; }
 
 .event-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 16px 20px;
+  border-radius: 12px; padding: 14px 20px;
   display: flex; align-items: center; gap: 16px;
-  transition: border-color 0.2s; position: relative; overflow: hidden;
+  cursor: pointer; transition: background 0.18s, border-color 0.18s;
+  position: relative; overflow: hidden; user-select: none;
 }
 .event-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
@@ -235,24 +209,28 @@ nav {
 .event-card.status-live::before { background: var(--live); }
 .event-card.status-upcoming::before { background: var(--upcoming); }
 .event-card.status-finished::before { background: var(--finished); opacity: 0.5; }
-.event-card:hover { border-color: var(--border); background: var(--surface2); }
+.event-card:hover { background: var(--surface2); }
+.event-card.open { border-color: var(--accent2); border-bottom-left-radius: 0; border-bottom-right-radius: 0; background: var(--surface2); }
 .event-card.status-finished { opacity: 0.6; }
 
-.ev-teams { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
-.team-block {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 5px; min-width: 52px;
+/* chevron */
+.ev-chevron {
+  margin-left: auto; font-size: 11px; color: var(--muted);
+  transition: transform 0.25s; flex-shrink: 0;
 }
+.event-card.open .ev-chevron { transform: rotate(180deg); color: var(--accent2); }
+
+.ev-teams { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.team-block { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 52px; }
 .team-img { width: 38px; height: 38px; object-fit: contain; border-radius: 4px; }
 .team-img-fallback {
-  width: 38px; height: 38px; background: var(--surface3);
-  border-radius: 6px; display:flex; align-items:center; justify-content:center;
+  width: 38px; height: 38px; background: var(--surface3); border-radius: 6px;
+  display:flex; align-items:center; justify-content:center;
   font-size: 9px; color: var(--muted); text-align: center; padding: 4px;
 }
 .team-name {
-  font-size: 12px; font-weight: 600; text-align: center;
-  max-width: 70px; line-height: 1.2;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 12px; font-weight: 600; text-align: center; max-width: 70px;
+  line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .vs-block { display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .vs { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); }
@@ -264,10 +242,7 @@ nav {
 .ev-event-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
 .ev-tournament { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-.ev-meta {
-  display: flex; flex-direction: column; align-items: flex-end;
-  gap: 6px; min-width: 100px;
-}
+.ev-meta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .ev-status {
   font-size: 10px; font-weight: 800; letter-spacing: 1px;
   padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
@@ -278,18 +253,57 @@ nav {
 .ev-status.upcoming { background: rgba(60,170,255,0.1); color: var(--upcoming); border: 1px solid rgba(60,170,255,0.25); }
 .ev-status.finished { background: rgba(90,90,120,0.15); color: var(--muted); border: 1px solid rgba(90,90,120,0.25); }
 
-.ev-channels {
-  display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end;
+.ev-ch-count {
+  font-size: 11px; color: var(--muted); background: var(--surface3);
+  border: 1px solid var(--border); padding: 3px 8px; border-radius: 10px; white-space: nowrap;
 }
-.ev-ch-link { text-decoration: none; transition: transform 0.15s; display: flex; }
-.ev-ch-link:hover { transform: scale(1.12); }
-.ev-ch-img { width: 28px; height: 20px; object-fit: contain; border-radius: 3px; background: var(--surface3); }
-.ev-ch-fallback {
-  width: 28px; height: 20px; background: var(--surface3);
-  border-radius: 3px; display: flex; align-items: center;
-  justify-content: center; font-size: 8px; color: var(--muted);
+
+/* ── CHANNEL DRAWER ── */
+.ch-drawer {
+  display: none;
+  background: var(--surface2);
+  border: 1px solid var(--accent2);
+  border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 14px 18px;
+  animation: slideDown 0.2s ease;
 }
-.no-channels { font-size: 11px; color: var(--muted); font-style: italic; }
+.ch-drawer.open { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.drawer-header {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 10px; font-weight: 600;
+}
+
+.drawer-channels {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+.drawer-ch-btn {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 12px;
+  text-decoration: none; color: var(--text);
+  font-size: 12px; font-weight: 500;
+  transition: all 0.15s; cursor: pointer; white-space: nowrap;
+}
+.drawer-ch-btn:hover { border-color: var(--accent2); background: var(--surface3); color: #fff; }
+.drawer-ch-btn img {
+  width: 26px; height: 18px; object-fit: contain; border-radius: 2px;
+  background: var(--surface3); flex-shrink: 0;
+}
+.drawer-ch-btn .ch-img-fallback {
+  width: 26px; height: 18px; background: var(--surface3);
+  border-radius: 2px; display:flex; align-items:center; justify-content:center;
+  font-size: 8px; color: var(--muted); flex-shrink: 0;
+}
+.no-channels-drawer { font-size: 12px; color: var(--muted); font-style: italic; }
 
 .no-results { text-align: center; color: var(--muted); padding: 60px; }
 .no-results span { display: block; font-size: 48px; margin-bottom: 12px; }
@@ -297,15 +311,13 @@ nav {
 .spinner-wrap { display: flex; align-items: center; justify-content: center; padding: 80px; }
 .spinner {
   width: 40px; height: 40px; border: 3px solid var(--border);
-  border-top-color: var(--accent); border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .section-heading {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 28px; font-weight: 800; letter-spacing: 1px;
-  margin-bottom: 4px; display: flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800;
+  letter-spacing: 1px; margin-bottom: 4px; display: flex; align-items: center; gap: 10px;
 }
 .section-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
 
@@ -315,7 +327,7 @@ nav {
   .section { padding: 14px; }
   .channels-grid { grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 8px; }
   .event-card { flex-wrap: wrap; padding: 12px; }
-  .ev-meta { flex-direction: row; align-items: center; min-width: auto; }
+  .drawer-ch-btn { font-size: 11px; padding: 5px 9px; }
 }
 </style>
 </head>
@@ -428,8 +440,7 @@ function buildTzSelect() {
   sel.innerHTML = '';
   TZ_OPTIONS.forEach(tz => {
     const o = document.createElement('option');
-    o.value = tz.value;
-    o.textContent = tz.label;
+    o.value = tz.value; o.textContent = tz.label;
     if (tz.value === '__LOCAL__') o.selected = true;
     sel.appendChild(o);
   });
@@ -450,8 +461,8 @@ function updateClock() {
   try {
     const now = new Date();
     const time = selectedTz === '__LOCAL__'
-      ? now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-      : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: selectedTz });
+      ? now.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' })
+      : now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit', timeZone: selectedTz });
     el.textContent = time;
   } catch(e) { el.textContent = ''; }
 }
@@ -464,77 +475,41 @@ function convertTime(timeStr) {
   const mins  = parseInt(match[2]);
   const abbr  = (match[3] || 'GMT').toUpperCase();
   const SRC_OFFSETS = {
-    GMT:0, UTC:0, WET:0,
-    BST:1, CET:1, WAT:1,
-    CEST:2, EET:2,
-    MSK:3,
-    GST:4,
-    PKT:5, IST:5.5,
-    ICT:7,
-    SGT:8, CST:8,
-    JST:9,
-    AEST:10,
-    NZST:12,
-    EST:-5, EDT:-4,
-    PST:-8, PDT:-7
-  };
-  const srcOff = SRC_OFFSETS[abbr] ?? 0;
-  const srcOffH = Math.floor(srcOff);
-  const srcOffM = Math.round((srcOff - srcOffH) * 60);
-  const now = new Date();
-  const utcMs = Date.UTC(
-    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
-    hours - srcOffH,
-    mins - srcOffM
-  );
-  const d = new Date(utcMs);
-  try {
-    if (selectedTz === '__LOCAL__')
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: selectedTz });
-  } catch(e) { return timeStr; }
-}
-
-// ── STATUS SANITY CHECK ──
-// If the API wrongly marks a future event as live, fix it
-function sanitizeStatus(ev) {
-  if (ev.status !== 'live') return ev;
-  if (!ev.time) return ev;
-
-  const match = ev.time.match(/(\d{1,2}):(\d{2})\s*(GMT|UTC|BST|CET|CEST|EST|EDT|PST|PDT|IST|WET|WAT|EET|MSK|GST|PKT|ICT|SGT|JST|AEST|NZST)?/i);
-  if (!match) return ev;
-
-  const hours = parseInt(match[1]);
-  const mins  = parseInt(match[2]);
-  const abbr  = (match[3] || 'GMT').toUpperCase();
-  const SRC_OFFSETS = {
-    GMT:0, UTC:0, WET:0,
-    BST:1, CET:1, WAT:1,
-    CEST:2, EET:2,
-    MSK:3, GST:4,
-    PKT:5, IST:5.5, ICT:7,
-    SGT:8, CST:8, JST:9,
-    AEST:10, NZST:12,
-    EST:-5, EDT:-4, PST:-8, PDT:-7
+    GMT:0,UTC:0,WET:0,BST:1,CET:1,WAT:1,CEST:2,EET:2,MSK:3,GST:4,
+    PKT:5,IST:5.5,ICT:7,SGT:8,CST:8,JST:9,AEST:10,NZST:12,EST:-5,EDT:-4,PST:-8,PDT:-7
   };
   const srcOff  = SRC_OFFSETS[abbr] ?? 0;
   const srcOffH = Math.floor(srcOff);
   const srcOffM = Math.round((srcOff - srcOffH) * 60);
-
   const now = new Date();
-  const utcMs = Date.UTC(
-    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
-    hours - srcOffH, mins - srcOffM
-  );
+  const utcMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), hours - srcOffH, mins - srcOffM);
+  const d = new Date(utcMs);
+  try {
+    if (selectedTz === '__LOCAL__')
+      return d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    return d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', timeZone: selectedTz });
+  } catch(e) { return timeStr; }
+}
 
-  // How many minutes from now until the event starts (positive = future)
+// ── STATUS SANITY CHECK ──
+function sanitizeStatus(ev) {
+  if (ev.status !== 'live') return ev;
+  if (!ev.time) return ev;
+  const match = ev.time.match(/(\d{1,2}):(\d{2})\s*(GMT|UTC|BST|CET|CEST|EST|EDT|PST|PDT|IST|WET|WAT|EET|MSK|GST|PKT|ICT|SGT|JST|AEST|NZST)?/i);
+  if (!match) return ev;
+  const hours = parseInt(match[1]), mins = parseInt(match[2]);
+  const abbr  = (match[3] || 'GMT').toUpperCase();
+  const SRC_OFFSETS = {
+    GMT:0,UTC:0,WET:0,BST:1,CET:1,WAT:1,CEST:2,EET:2,MSK:3,GST:4,
+    PKT:5,IST:5.5,ICT:7,SGT:8,CST:8,JST:9,AEST:10,NZST:12,EST:-5,EDT:-4,PST:-8,PDT:-7
+  };
+  const srcOff  = SRC_OFFSETS[abbr] ?? 0;
+  const srcOffH = Math.floor(srcOff);
+  const srcOffM = Math.round((srcOff - srcOffH) * 60);
+  const now = new Date();
+  const utcMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), hours - srcOffH, mins - srcOffM);
   const diffMinutes = (utcMs - now.getTime()) / 60000;
-
-  // If the event starts more than 10 minutes from now, it cannot be live
-  if (diffMinutes > 10) {
-    return { ...ev, status: 'upcoming' };
-  }
-
+  if (diffMinutes > 10) return { ...ev, status: 'upcoming' };
   return ev;
 }
 
@@ -552,8 +527,7 @@ function switchTab(t) {
 function onSearch() {
   searchVal = document.getElementById('searchBox').value.toLowerCase().trim();
   const sec = document.getElementById('sectionChannels').classList.contains('active');
-  if (sec) renderChannels();
-  else renderEvents();
+  if (sec) renderChannels(); else renderEvents();
 }
 
 // ── CHANNELS ──
@@ -568,7 +542,7 @@ async function loadChannels() {
     buildCountryTabs();
     renderChannels();
   } catch(e) {
-    document.getElementById('channelLoadingSpinner').innerHTML = '<p style="color:var(--muted)">Failed to load channels. CORS may block direct fetch.</p>';
+    document.getElementById('channelLoadingSpinner').innerHTML = '<p style="color:var(--muted)">Failed to load channels.</p>';
     console.error(e);
   }
 }
@@ -581,7 +555,7 @@ function buildCountryTabs() {
   all.id='ctab-all'; all.onclick=()=>setCountry('all'); el.appendChild(all);
   codes.forEach(code => {
     const b = mkEl('button','ctab', COUNTRY_NAMES[code]||code.toUpperCase());
-    b.id = 'ctab-'+code; b.onclick = () => setCountry(code); el.appendChild(b);
+    b.id='ctab-'+code; b.onclick=()=>setCountry(code); el.appendChild(b);
   });
 }
 
@@ -596,7 +570,7 @@ function setCF(m) {
   cfMode = m;
   ['all','on','off'].forEach(k => {
     const b = document.getElementById('cf'+k.charAt(0).toUpperCase()+k.slice(1));
-    b.className = 'filter-pill' + (k==='all'&&m==='all' ? ' active' : k==='on'&&m==='online' ? ' on-active' : k==='off'&&m==='offline' ? ' off-active' : '');
+    b.className = 'filter-pill'+(k==='all'&&m==='all'?' active':k==='on'&&m==='online'?' on-active':k==='off'&&m==='offline'?' off-active':'');
   });
   renderChannels();
 }
@@ -608,21 +582,12 @@ function renderChannels() {
     if (searchVal && !ch.name.toLowerCase().includes(searchVal)) return false;
     return true;
   });
-
-  const online  = filtered.filter(c=>c.status==='online').length;
-  const offline = filtered.filter(c=>c.status==='offline').length;
   document.getElementById('statTotal').textContent   = filtered.length;
-  document.getElementById('statOnline').textContent  = online;
-  document.getElementById('statOffline').textContent = offline;
-
+  document.getElementById('statOnline').textContent  = filtered.filter(c=>c.status==='online').length;
+  document.getElementById('statOffline').textContent = filtered.filter(c=>c.status==='offline').length;
   const grid = document.getElementById('channelGrid');
   grid.innerHTML = '';
-
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="no-results"><span>📡</span>No channels found.</div>';
-    return;
-  }
-
+  if (!filtered.length) { grid.innerHTML='<div class="no-results"><span>📡</span>No channels found.</div>'; return; }
   if (activeCountry !== 'all' || searchVal) {
     const g = mkEl('div','channels-grid');
     filtered.forEach(ch => g.appendChild(makeChannelCard(ch)));
@@ -636,33 +601,25 @@ function renderChannels() {
       hdr.innerHTML = `${COUNTRY_NAMES[code]||code.toUpperCase()} <span class="cnt">${chs.length}</span>`;
       const g = mkEl('div','channels-grid');
       chs.forEach(ch => g.appendChild(makeChannelCard(ch)));
-      sec.appendChild(hdr); sec.appendChild(g);
-      grid.appendChild(sec);
+      sec.appendChild(hdr); sec.appendChild(g); grid.appendChild(sec);
     }
   }
 }
 
 function makeChannelCard(ch) {
   const a = document.createElement('a');
-  a.href = ch.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-  a.className = 'ch-card' + (ch.status==='offline' ? ' offline-ch' : '');
+  a.href=ch.url; a.target='_blank'; a.rel='noopener noreferrer';
+  a.className='ch-card'+(ch.status==='offline'?' offline-ch':'');
   const dot = mkEl('span','ch-status '+ch.status);
   const imgWrap = document.createElement('div');
   if (ch.image) {
     const img = document.createElement('img');
-    img.src = ch.image; img.alt = ch.name; img.className = 'ch-logo';
-    img.onerror = () => { img.replaceWith(mkLogoFallback(ch.name)); };
+    img.src=ch.image; img.alt=ch.name; img.className='ch-logo';
+    img.onerror=()=>img.replaceWith(mkEl('div','ch-logo-fallback',ch.name.slice(0,12)));
     imgWrap.appendChild(img);
-  } else {
-    imgWrap.appendChild(mkLogoFallback(ch.name));
-  }
-  const name = mkEl('span','ch-name', ch.name);
-  a.appendChild(dot); a.appendChild(imgWrap); a.appendChild(name);
+  } else { imgWrap.appendChild(mkEl('div','ch-logo-fallback',ch.name.slice(0,12))); }
+  a.appendChild(dot); a.appendChild(imgWrap); a.appendChild(mkEl('span','ch-name',ch.name));
   return a;
-}
-
-function mkLogoFallback(name) {
-  return mkEl('div','ch-logo-fallback', name.slice(0,12));
 }
 
 // ── EVENTS ──
@@ -673,31 +630,23 @@ async function loadEvents() {
     eventsData = d['cdn-live-tv'] || {};
     document.getElementById('eventsLoadingSpinner').style.display = 'none';
     document.getElementById('eventContent').style.display = 'block';
-
-    // Count real live events after sanity check
     const totalLive = Object.values(eventsData).flat().map(sanitizeStatus).filter(e=>e.status==='live').length;
-    const sub = Object.keys(eventsData).filter(k=>eventsData[k].length>0).length + ' sports — ' + Object.values(eventsData).flat().length + ' events today';
-    document.getElementById('eventSub').textContent = sub;
-
+    document.getElementById('eventSub').textContent =
+      Object.keys(eventsData).filter(k=>eventsData[k].length>0).length + ' sports — ' +
+      Object.values(eventsData).flat().length + ' events today';
     if (totalLive > 0) {
-      const lb = document.getElementById('liveCount');
-      lb.style.display = 'inline-flex';
-      lb.textContent = ' ' + totalLive + ' LIVE';
-      const lb2 = document.getElementById('liveCountBadge');
-      lb2.style.display = 'inline-flex';
-      lb2.textContent = totalLive + ' LIVE';
+      document.getElementById('liveCount').style.display = 'inline-flex';
+      document.getElementById('liveCount').textContent = ' '+totalLive+' LIVE';
+      document.getElementById('liveCountBadge').style.display = 'inline-flex';
+      document.getElementById('liveCountBadge').textContent = totalLive+' LIVE';
     }
-
     buildTzSelect();
     buildSportsTabs();
-    const firstSport = Object.keys(eventsData).find(k => eventsData[k].length > 0);
-    if (firstSport) {
-      activeSport = firstSport;
-      document.getElementById('stab-'+firstSport)?.classList.add('active');
-    }
+    const firstSport = Object.keys(eventsData).find(k=>eventsData[k].length>0);
+    if (firstSport) { activeSport=firstSport; document.getElementById('stab-'+firstSport)?.classList.add('active'); }
     renderEvents();
   } catch(e) {
-    document.getElementById('eventsLoadingSpinner').innerHTML = '<p style="color:var(--muted)">Failed to load events.</p>';
+    document.getElementById('eventsLoadingSpinner').innerHTML='<p style="color:var(--muted)">Failed to load events.</p>';
     console.error(e);
   }
 }
@@ -709,16 +658,16 @@ function buildSportsTabs() {
     if (!evs.length) continue;
     const liveN = evs.map(sanitizeStatus).filter(e=>e.status==='live').length;
     const b = document.createElement('button');
-    b.className = 'stab'; b.id = 'stab-'+sport;
-    b.innerHTML = `${SPORT_ICONS[sport]||'🏆'} ${sport} <span class="count">${evs.length}${liveN?' <span style="color:var(--live)">●'+liveN+'</span>':''}</span>`;
-    b.onclick = () => setSport(sport);
+    b.className='stab'; b.id='stab-'+sport;
+    b.innerHTML=`${SPORT_ICONS[sport]||'🏆'} ${sport} <span class="count">${evs.length}${liveN?` <span style="color:var(--live)">●${liveN}</span>`:''}</span>`;
+    b.onclick=()=>setSport(sport);
     el.appendChild(b);
   }
 }
 
 function setSport(s) {
   activeSport = s;
-  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
   document.getElementById('stab-'+s)?.classList.add('active');
   renderEvents();
 }
@@ -726,8 +675,8 @@ function setSport(s) {
 function setEF(m) {
   efMode = m;
   ['all','live','upcoming','finished'].forEach(k => {
-    const b = document.getElementById('sf'+k.charAt(0).toUpperCase()+k.slice(1));
-    b.className = 'sf-btn' + (m===k ? ' active-'+k : '');
+    document.getElementById('sf'+k.charAt(0).toUpperCase()+k.slice(1)).className =
+      'sf-btn'+(m===k?' active-'+k:'');
   });
   renderEvents();
 }
@@ -736,26 +685,40 @@ function renderEvents() {
   const list = document.getElementById('eventsList');
   list.innerHTML = '';
   if (!activeSport || !eventsData[activeSport]) return;
+  let evs = eventsData[activeSport].map(sanitizeStatus).filter(e => {
+    if (efMode !== 'all' && e.status !== efMode) return false;
+    if (searchVal) {
+      const si = [e.homeTeam,e.awayTeam,e.event,e.tournament,e.country].filter(Boolean).join(' ').toLowerCase();
+      if (!si.includes(searchVal)) return false;
+    }
+    return true;
+  });
+  const order = {live:0,upcoming:1,finished:2};
+  evs.sort((a,b)=>(order[a.status]??3)-(order[b.status]??3));
+  if (!evs.length) { list.innerHTML='<div class="no-results"><span>🏟️</span>No events found.</div>'; return; }
+  evs.forEach(ev => list.appendChild(makeEventWrap(ev)));
+}
 
-  let evs = eventsData[activeSport]
-    .map(sanitizeStatus)
-    .filter(e => {
-      if (efMode !== 'all' && e.status !== efMode) return false;
-      if (searchVal) {
-        const searchIn = [e.homeTeam, e.awayTeam, e.event, e.tournament, e.country].filter(Boolean).join(' ').toLowerCase();
-        if (!searchIn.includes(searchVal)) return false;
-      }
-      return true;
+// ── EVENT WRAP (card + drawer) ──
+function makeEventWrap(ev) {
+  const wrap = mkEl('div','event-wrap');
+  const card = makeEventCard(ev);
+  const drawer = makeDrawer(ev);
+  card.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    // Close all others
+    document.querySelectorAll('.event-card.open').forEach(c => {
+      c.classList.remove('open');
+      c.nextElementSibling?.classList.remove('open');
     });
-
-  const order = {live:0, upcoming:1, finished:2};
-  evs.sort((a,b) => (order[a.status]??3) - (order[b.status]??3));
-
-  if (!evs.length) {
-    list.innerHTML = '<div class="no-results"><span>🏟️</span>No events found.</div>';
-    return;
-  }
-  evs.forEach(ev => list.appendChild(makeEventCard(ev)));
+    if (!isOpen) {
+      card.classList.add('open');
+      drawer.classList.add('open');
+    }
+  });
+  wrap.appendChild(card);
+  wrap.appendChild(drawer);
+  return wrap;
 }
 
 function makeEventCard(ev) {
@@ -772,14 +735,14 @@ function makeEventCard(ev) {
     teams.appendChild(makeTeamBlock(ev.awayTeam, ev.awayTeamIMG));
     card.appendChild(teams);
     const tour = mkEl('div','');
-    tour.innerHTML = `<div style="font-size:12px;color:var(--muted)">${escHtml(ev.tournament||'')} <span style="margin:0 4px">·</span> <img src="${escHtml(ev.countryIMG||'')}" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;"> ${escHtml(ev.country||'')}</div>`;
+    tour.innerHTML = `<div style="font-size:12px;color:var(--muted);min-width:160px">${escHtml(ev.tournament||'')} · <img src="${escHtml(ev.countryIMG||'')}" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;"> ${escHtml(ev.country||'')}</div>`;
     card.appendChild(tour);
   } else {
     const eb = mkEl('div','ev-event-block');
     if (ev.eventIMG) {
       const img = document.createElement('img');
-      img.src = ev.eventIMG; img.alt = ''; img.className = 'ev-event-img';
-      img.onerror = () => img.style.display='none';
+      img.src=ev.eventIMG; img.alt=''; img.className='ev-event-img';
+      img.onerror=()=>img.style.display='none';
       eb.appendChild(img);
     }
     const info = mkEl('div','ev-event-info');
@@ -789,49 +752,65 @@ function makeEventCard(ev) {
     card.appendChild(eb);
   }
 
+  // Right side: status + channel count + chevron
   const meta = mkEl('div','ev-meta');
   meta.appendChild(mkEl('span','ev-status '+ev.status, ev.status.toUpperCase()));
-
-  if (ev.channels && ev.channels.length) {
-    const chRow = mkEl('div','ev-channels');
-    ev.channels.forEach(ch => {
-      const a = document.createElement('a');
-      a.href = ch.url; a.target='_blank'; a.rel='noopener noreferrer';
-      a.className = 'ev-ch-link'; a.title = ch.channel_name;
-      if (ch.image) {
-        const img = document.createElement('img');
-        img.src = ch.image; img.alt = ch.channel_name; img.className = 'ev-ch-img';
-        img.onerror = () => img.replaceWith(mkEl('div','ev-ch-fallback','TV'));
-        a.appendChild(img);
-      } else {
-        a.appendChild(mkEl('div','ev-ch-fallback','TV'));
-      }
-      chRow.appendChild(a);
-    });
-    meta.appendChild(chRow);
-  } else {
-    meta.appendChild(mkEl('span','no-channels','No stream'));
+  const chCount = ev.channels?.length || 0;
+  if (chCount > 0) {
+    meta.appendChild(mkEl('span','ev-ch-count', `📺 ${chCount} stream${chCount>1?'s':''}`));
   }
-
+  meta.appendChild(mkEl('span','ev-chevron','▼'));
   card.appendChild(meta);
   return card;
+}
+
+function makeDrawer(ev) {
+  const drawer = mkEl('div','ch-drawer');
+  const hdr = mkEl('div','drawer-header',
+    ev.homeTeam && ev.awayTeam
+      ? `${ev.homeTeam} vs ${ev.awayTeam} — Available streams`
+      : `${ev.event||'Event'} — Available streams`
+  );
+  drawer.appendChild(hdr);
+
+  const row = mkEl('div','drawer-channels');
+  if (ev.channels && ev.channels.length) {
+    ev.channels.forEach(ch => {
+      const a = document.createElement('a');
+      a.href=ch.url; a.target='_blank'; a.rel='noopener noreferrer';
+      a.className='drawer-ch-btn';
+      if (ch.image) {
+        const img = document.createElement('img');
+        img.src=ch.image; img.alt=ch.channel_name;
+        img.onerror=()=>img.replaceWith(mkEl('span','ch-img-fallback','TV'));
+        a.appendChild(img);
+      } else {
+        a.appendChild(mkEl('span','ch-img-fallback','TV'));
+      }
+      a.appendChild(document.createTextNode(ch.channel_name));
+      row.appendChild(a);
+    });
+  } else {
+    row.appendChild(mkEl('span','no-channels-drawer','No streams available'));
+  }
+  drawer.appendChild(row);
+  return drawer;
 }
 
 function makeTeamBlock(name, imgUrl) {
   const b = mkEl('div','team-block');
   if (imgUrl && !imgUrl.endsWith('logo.png')) {
     const img = document.createElement('img');
-    img.src = imgUrl; img.alt = name; img.className = 'team-img';
-    img.onerror = () => img.replaceWith(mkEl('div','team-img-fallback',name.slice(0,3)));
+    img.src=imgUrl; img.alt=name; img.className='team-img';
+    img.onerror=()=>img.replaceWith(mkEl('div','team-img-fallback',name.slice(0,3)));
     b.appendChild(img);
   } else {
     b.appendChild(mkEl('div','team-img-fallback',name.slice(0,3)));
   }
-  b.appendChild(mkEl('span','team-name', name));
+  b.appendChild(mkEl('span','team-name',name));
   return b;
 }
 
-// ── HELPERS ──
 function mkEl(tag, cls='', text='') {
   const el = document.createElement(tag);
   if (cls) el.className = cls;
@@ -842,7 +821,6 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── INIT ──
 loadChannels();
 loadEvents();
 </script>
